@@ -1,0 +1,9 @@
+Name:                my
+Version:             0.0
+Description:         My network program
+Build-Type:          Simple
+Cabal-Version:       >=1.2
+
+Executable test
+  Main-is:           my.hs
+  Build-Depends:     base >= 4 && < 5, HTTP
