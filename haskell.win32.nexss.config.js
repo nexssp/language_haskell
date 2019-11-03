@@ -9,24 +9,23 @@ languageConfig.compilers = {
   haskell: {
     install: "scoop install haskell",
     // Cpp does not have possibility to compile and run on the fly. We need to save it as a exe file first.
-    command: "stack exec -- runghc",
+    command: "stack",
     // command: "stack",
-    args: "<file>",
+    args: "exec -- runghc <file>",
     help: ``
   }
 };
 languageConfig.errors = require("./nexss.haskell.errors");
 languageConfig.languagePackageManagers = {
   npm: {
-    installation: "PowerShell.exe -File installComposer.ps1",
-    messageAfterInstallation:
-      "Add to the top of your php file(s): require __DIR__ . '/vendor/autoload.php';", //this message will be displayed after this package manager installation, maybe some action needed etc.
-    installed: "composer installed",
-    search: "composer search",
-    install: "composer require",
-    uninstall: "composer remove",
-    help: "composer",
-    version: "composer version",
+    installation: "",
+    messageAfterInstallation: "", //this message will be displayed after this package manager installation, maybe some action needed etc.
+    installed: "cabal installed",
+    search: "cabal search",
+    install: "cabal v2-update && cabal v2-install --lib",
+    uninstall: "cabal remove",
+    help: "cabal help",
+    version: "cabal version",
     init: () => {},
     // if command not found in specification
     // run directly on package manager
