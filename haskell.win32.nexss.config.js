@@ -25,8 +25,26 @@ languageConfig.languagePackageManagers = {
     install: "cabal v2-update && cabal v2-install --lib",
     uninstall: "cabal remove",
     help: "cabal help",
-    version: "cabal version",
-    init: () => {},
+    version: "cabal --version",
+    check: "ghc-pkg check",
+    upgrade: "cabal install Cabal cabal-install",
+    init: () => {
+      if (
+        !require("fs").existsSync(
+          require("path").join(process.cwd(), "package.cabal")
+        )
+      ) {
+        require("child_process").execSync(
+          "cabal init -n --is-executable &&  cabal sandbox init",
+          {
+            stdio: "inherit"
+          }
+        );
+        console.log("initialized cabal project.");
+      } else {
+        console.log("cabal already initialized.");
+      }
+    },
     // if command not found in specification
     // run directly on package manager
     else: "composer"
