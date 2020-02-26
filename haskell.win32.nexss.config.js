@@ -8,7 +8,6 @@ languageConfig.builders = {};
 languageConfig.compilers = {
   haskell: {
     install: "scoop install haskell",
-    // Cpp does not have possibility to compile and run on the fly. We need to save it as a exe file first.
     command: "stack",
     // command: "stack",
     args: "exec -- runghc <file>",
