@@ -2,7 +2,10 @@ let languageConfig = Object.assign({}, require("../config.win32"));
 languageConfig.title = "Haskell";
 languageConfig.description =
   "An advanced, purely functional programming language";
-languageConfig.url = "https://www.haskell.org/";
+languageConfig.url = "https://www.haskell.org";
+languageConfig.founders = [""];
+languageConfig.developers = [""];
+languageConfig.years = ["1990"];
 languageConfig.extensions = [".hs"];
 languageConfig.builders = {};
 languageConfig.compilers = {
