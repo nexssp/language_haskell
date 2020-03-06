@@ -11,9 +11,9 @@ languageConfig.builders = {};
 languageConfig.compilers = {
   haskell: {
     install: "scoop install haskell",
-    command: "stack",
+    command: "runhaskell",
     // command: "stack",
-    args: "exec -- runghc <file>",
+    args: "<file>",
     help: ``
   }
 };
