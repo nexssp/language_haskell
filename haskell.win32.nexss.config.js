@@ -1,4 +1,7 @@
-let languageConfig = Object.assign({}, require("../config.win32"));
+let languageConfig = Object.assign(
+  {},
+  require(`../config.${process.platform}`)
+);
 languageConfig.title = "Haskell";
 languageConfig.description =
   "An advanced, purely functional programming language";
@@ -7,6 +10,10 @@ languageConfig.founders = [""];
 languageConfig.developers = [""];
 languageConfig.years = ["1990"];
 languageConfig.extensions = [".hs"];
+languageConfig.executeCommandLine = "";
+languageConfig.printCommandLine = ""; //no console.log() needed to display result eg node -p "4+6"
+languageConfig.checkSyntax = "ghc -fno-code"; // OR ghc test.hs -e 'return 0'
+languageConfig.interactiveShell = "ghci"; // exit from shell -> :quit
 languageConfig.builders = {};
 languageConfig.compilers = {
   haskell: {
@@ -14,15 +21,22 @@ languageConfig.compilers = {
     command: "runhaskell",
     // command: "stack",
     args: "<file>",
-    help: ``
-  }
+    help: ``,
+  },
+  stack: {
+    install: "scoop install stack",
+    command: "stack",
+    args: "<file>",
+    help: ``,
+  },
 };
 languageConfig.errors = require("./nexss.haskell.errors");
+languageConfig.replacer = __dirname + "/nexss.haskell.replacer.js"; // replace strings in errors solutions
 languageConfig.languagePackageManagers = {
-  npm: {
+  cabal: {
     installation: "",
     messageAfterInstallation: "", //this message will be displayed after this package manager installation, maybe some action needed etc.
-    installed: "cabal installed",
+    installed: "ghc-pkg list", // or :show modules
     search: "cabal search",
     install: "cabal v2-update && cabal v2-install --lib",
     uninstall: "cabal remove",
@@ -39,7 +53,7 @@ languageConfig.languagePackageManagers = {
         require("child_process").execSync(
           "cabal init -n --is-executable &&  cabal sandbox init",
           {
-            stdio: "inherit"
+            stdio: "inherit",
           }
         );
         console.log("initialized cabal project.");
@@ -49,8 +63,8 @@ languageConfig.languagePackageManagers = {
     },
     // if command not found in specification
     // run directly on package manager
-    else: "composer"
-  }
+    else: "cabal",
+  },
 };
 
 module.exports = languageConfig;
