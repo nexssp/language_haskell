@@ -24,6 +24,14 @@ languageConfig.dist = distName;
 
 // TODO: Later to cleanup this config file !!
 switch (distName) {
+  case "Arch Linux":
+    languageConfig.compilers.haskell.install = replaceCommandByDist(
+      "pacman -S --noconfirm ghc"
+    );
+    languageConfig.compilers.haskell.command = "ghc";
+    languageConfig.compilers.haskell.args =
+      "-dynamic <file> && ./<fileNoExt> && rm ./<fileNoExt>";
+    break;
   case "Alpine Linux":
     languageConfig.compilers.haskell.install = replaceCommandByDist(
       "apk add ghc"
