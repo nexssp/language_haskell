@@ -1,3 +1,4 @@
 # Haskell
 
-(http://learnyouahaskell.com/functors-applicative-functors-and-monoids)
+- <http://dev.stephendiehl.com/hask/>
+- <http://learnyouahaskell.com/functors-applicative-functors-and-monoids>

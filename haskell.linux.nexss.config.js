@@ -1,47 +1,45 @@
 let languageConfig = Object.assign({}, require("./haskell.win32.nexss.config"));
+
+const sudo = process.sudo;
+
 languageConfig.compilers = {
   haskell: {
-    install: "apt update && apt install -y haskell-platform",
+    install: `${sudo}apt update -y && apt install -y haskell-platform`,
     command: "runhaskell",
     args: "<file>",
     help: ``,
   },
   stack: {
-    install: "apt update && apt install -y haskell-stack",
+    install: `${sudo}apt update -y && apt install -y haskell-stack`,
     command: "stack",
     args: "<file>",
     help: ``,
   },
 };
 
-const {
-  replaceCommandByDist,
-  dist,
-} = require(`${process.env.NEXSS_SRC_PATH}/lib/osys`);
-
-const distName = dist();
+const distName = process.distro;
 languageConfig.dist = distName;
 
 // TODO: Later to cleanup this config file !!
 switch (distName) {
-  case "Arch Linux":
-    languageConfig.compilers.haskell.install = replaceCommandByDist(
+  case process.distros.ARCH:
+    languageConfig.compilers.haskell.install = process.replacePMByDistro(
       "pacman -S --noconfirm ghc"
     );
     languageConfig.compilers.haskell.command = "ghc";
     languageConfig.compilers.haskell.args =
-      "-dynamic <file> && ./<fileNoExt> && rm ./<fileNoExt>";
+      "-dynamic <file> && ./<fileNoExt> && rm ./<fileNoExt> && :"; // : Empty command to end rm
     break;
-  case "Alpine Linux":
-    languageConfig.compilers.haskell.install = replaceCommandByDist(
+  case process.distros.ALPINE:
+    languageConfig.compilers.haskell.install = process.replacePMByDistro(
       "apk add ghc"
     );
     languageConfig.compilers.haskell.command = "ghc";
     languageConfig.compilers.haskell.args =
-      "<file> && ./<fileNoExt> && rm ./<fileNoExt>";
+      "<file> && ./<fileNoExt> && rm ./<fileNoExt> && :";
     break;
   default:
-    languageConfig.compilers.haskell.install = replaceCommandByDist(
+    languageConfig.compilers.haskell.install = process.replacePMByDistro(
       languageConfig.compilers.haskell.install
     );
     break;
